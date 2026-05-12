@@ -1,0 +1,31 @@
+{
+  "name": "golden-seed-classical",
+  "version": "1.0.0",
+  "description": "金种子古文学习平台后端服务",
+  "main": "backend/app.js",
+  "scripts": {
+    "start": "node backend/app.js",
+    "dev": "nodemon backend/app.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": ["classical", "literature", "education"],
+  "author": "Golden Seed",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "sqlite3": "^5.1.7",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

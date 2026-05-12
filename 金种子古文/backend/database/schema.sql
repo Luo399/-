@@ -1,0 +1,67 @@
+CREATE TABLE IF NOT EXISTS poems (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  author TEXT NOT NULL,
+  dynasty TEXT NOT NULL,
+  content TEXT NOT NULL,
+  pinyin_map TEXT NOT NULL,
+  annotation TEXT NOT NULL,
+  audio_url TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS interpretations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  poem_id INTEGER NOT NULL,
+  scene_type TEXT NOT NULL,
+  order_num INTEGER NOT NULL,
+  content TEXT NOT NULL,
+  audio_url TEXT,
+  FOREIGN KEY (poem_id) REFERENCES poems(id)
+);
+
+CREATE TABLE IF NOT EXISTS questions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  poem_id INTEGER NOT NULL,
+  type TEXT NOT NULL,
+  question_text TEXT NOT NULL,
+  options TEXT NOT NULL,
+  correct_answer TEXT NOT NULL,
+  audio_url TEXT,
+  feedback_correct TEXT,
+  feedback_wrong TEXT,
+  FOREIGN KEY (poem_id) REFERENCES poems(id)
+);
+
+CREATE TABLE IF NOT EXISTS user_answers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  question_id INTEGER NOT NULL,
+  answer TEXT NOT NULL,
+  is_correct INTEGER NOT NULL DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (question_id) REFERENCES questions(id)
+);
+
+CREATE TABLE IF NOT EXISTS user_recordings (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  poem_id INTEGER NOT NULL,
+  audio_path TEXT NOT NULL,
+  duration INTEGER NOT NULL,
+  file_size INTEGER NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (poem_id) REFERENCES poems(id)
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  nickname TEXT,
+  avatar TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
